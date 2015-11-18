@@ -10,6 +10,7 @@ var useBaseName = require("history").useBasename;
 // Components
 var Main = require("../components/Main");
 var Home = require("../components/Home");
+var Profile = require("../components/Profile");
 
 // Set up base URL
 const history = useBaseName(createHistory)({
@@ -21,6 +22,7 @@ module.exports = (
     <Router history={history}>
         <Route path="/" component={Main}>
             <IndexRoute component={Home} />
+            <Route path="profile/:username" component={Profile} />
         </Route>
     </Router>
 );

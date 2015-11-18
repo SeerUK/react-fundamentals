@@ -1,7 +1,7 @@
 "use strict";
 
 var React = require("react");
-var Link = require("react-router").Link;
+var IndexLink = require("react-router").IndexLink;
 
 var Main = React.createClass({
     render: function() {
@@ -10,7 +10,7 @@ var Main = React.createClass({
                 <nav className="navbar navbar-default" role="navigation">
                     <div className="container">
                         <div className="navbar-header">
-                            <Link to="/" className="navbar-brand">React Fundamentals</Link>
+                            <IndexLink to="/" className="navbar-brand">React Fundamentals</IndexLink>
                         </div>
                     </div>
                 </nav>
