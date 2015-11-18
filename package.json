@@ -1,0 +1,37 @@
+{
+  "name": "react-fundamentals",
+  "version": "0.0.1",
+  "description": "Getting to grips with the basics of React.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SeerUK/react-fundamentals.git"
+  },
+  "keywords": [
+    "react",
+    "fundamentals",
+    "jsx",
+    "node"
+  ],
+  "author": "Elliot Wright <elliot@elliotwright.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SeerUK/react-fundamentals/issues"
+  },
+  "homepage": "https://github.com/SeerUK/react-fundamentals#readme",
+  "devDependencies": {
+    "babel-core": "^6.1.21",
+    "babel-loader": "^6.2.0",
+    "babel-preset-react": "^6.1.18",
+    "chalk": "^1.1.1",
+    "express": "^4.13.3",
+    "history": "^1.13.1",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-router": "^1.0.0",
+    "webpack": "^1.12.6"
+  }
+}
