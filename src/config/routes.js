@@ -21,7 +21,6 @@ module.exports = (
     <Router history={history}>
         <Route path="/" component={Main}>
             <IndexRoute component={Home} />
-            <Route path="/foo" component={Home} />
         </Route>
     </Router>
 );

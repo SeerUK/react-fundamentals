@@ -6,10 +6,16 @@ var Link = require("react-router").Link;
 var Main = React.createClass({
     render: function() {
         return (
-            <div>
-                <div>Hello world!</div>
-                <Link to="/foo">Go to foo</Link>
-                <div>
+            <div className="main-container">
+                <nav className="navbar navbar-default" role="navigation">
+                    <div className="container">
+                        <div className="navbar-header">
+                            <Link to="/" className="navbar-brand">React Fundamentals</Link>
+                        </div>
+                    </div>
+                </nav>
+
+                <div className="container">
                     {this.props.children}
                 </div>
             </div>
