@@ -8,20 +8,46 @@ var Repos = require("./Github/Repos");
 var UserProfile = require("./Github/UserProfile");
 var Notes = require("./Notes/Notes");
 
+var helpers = require("./utils/helpers");
+
 var Profile = React.createClass({
     mixins: [ ReactFireMixin ],
     getInitialState: function() {
         return {
-            bio: { name: "Elliot" },
+            bio: {},
             notes: [],
-            repos: [ 1, 2, 3 ]
+            repos: []
         }
+    },
+    init: function() {
+        var that = this;
+        var username = this.props.params.username;
+
+        this.childRef = this.baseRef.child(username);
+
+        this.bindAsArray(this.childRef, "notes");
+
+        helpers.getGithubInfo(username)
+            .then(function(data) {
+                that.setState({
+                    bio: data.bio,
+                    repos: data.repos
+                })
+            });
     },
     componentDidMount: function() {
         this.baseRef = new Firebase("https://sweltering-inferno-8790.firebaseio.com");
-        this.childRef = this.baseRef.child(this.props.params.username);
+        this.init();
+    },
+    componentDidUpdate: function(oldProps) {
+        var oldUsername = oldProps.params.username;
+        var newUsername = this.props.params.username;
 
-        this.bindAsArray(this.childRef, "notes");
+        if (oldUsername !== newUsername) {
+            this.childRef.off();
+            this.unbind("notes");
+            this.init();
+        }
     },
     componentWillUnmount: function() {
         this.baseRef.off();

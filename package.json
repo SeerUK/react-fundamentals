@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/SeerUK/react-fundamentals#readme",
   "devDependencies": {
+    "axios": "^0.7.0",
     "babel-core": "^6.1.21",
     "babel-loader": "^6.2.0",
     "babel-preset-react": "^6.1.18",

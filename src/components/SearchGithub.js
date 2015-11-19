@@ -5,8 +5,14 @@ var History = require("react-router").History;
 
 var SearchGithub = React.createClass({
     mixins: [ History ],
-    handleSubmit: function() {
+    handleSubmit: function(e) {
+        e.preventDefault();
+
         var username = this.refs.username.value;
+
+        if (!username.length) {
+            return;
+        }
 
         this.refs.username.value = "";
         this.history.pushState(null, "profile/" + username);
