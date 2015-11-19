@@ -30,6 +30,12 @@ var Profile = React.createClass({
     handleAddNote: function(note) {
         this.childRef.push(note);
     },
+    handleDeleteNote: function(note) {
+        var noteRef = this.childRef.child(note[".key"]);
+
+        noteRef.remove();
+        noteRef.off();
+    },
     render: function() {
         var username = this.props.params.username;
 
@@ -48,6 +54,7 @@ var Profile = React.createClass({
                         username={username}
                         notes={this.state.notes}
                         addNote={this.handleAddNote}
+                        deleteNote={this.handleDeleteNote}
                     />
                 </div>
             </div>

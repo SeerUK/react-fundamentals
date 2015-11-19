@@ -3,6 +3,8 @@
 var React = require("react");
 var IndexLink = require("react-router").IndexLink;
 
+var SearchGithub = require("./SearchGithub");
+
 var Main = React.createClass({
     render: function() {
         return (
@@ -11,6 +13,10 @@ var Main = React.createClass({
                     <div className="container">
                         <div className="navbar-header">
                             <IndexLink to="/" className="navbar-brand">React Fundamentals</IndexLink>
+                        </div>
+
+                        <div className="collapse navbar-collapse">
+                            <SearchGithub />
                         </div>
                     </div>
                 </nav>

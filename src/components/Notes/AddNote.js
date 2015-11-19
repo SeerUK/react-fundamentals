@@ -17,13 +17,18 @@ var AddNote = React.createClass({
     },
     render: function() {
         return (
-            <form className="input-group">
-                <input type="text" className="form-control" ref="note" placeholder="Add new note" />
-                <span className="input-group-btn">
-                    <button className="btn btn-default" type="submit" onClick={this.handleSubmit}>
-                        Submit
-                    </button>
-                </span>
+            <form>
+                <div className="form-group">
+                    <div className="input-group">
+                        <input type="text" className="form-control" ref="note" placeholder="New note..." />
+
+                        <span className="input-group-btn">
+                            <button className="btn btn-default" type="submit" onClick={this.handleSubmit}>
+                                Add
+                            </button>
+                        </span>
+                    </div>
+                </div>
             </form>
         );
     }
