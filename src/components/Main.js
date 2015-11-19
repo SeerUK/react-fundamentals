@@ -1,12 +1,9 @@
-"use strict";
+import React from "react";
+import { IndexLink } from "react-router";
+import SearchGithub from "./SearchGithub";
 
-var React = require("react");
-var IndexLink = require("react-router").IndexLink;
-
-var SearchGithub = require("./SearchGithub");
-
-var Main = React.createClass({
-    render: function() {
+class Main extends React.Component {
+    render() {
         return (
             <div className="main-container">
                 <nav className="navbar navbar-default" role="navigation">
@@ -27,6 +24,6 @@ var Main = React.createClass({
             </div>
         );
     }
-});
+}
 
-module.exports = Main;
+export default Main;

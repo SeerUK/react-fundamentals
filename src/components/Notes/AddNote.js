@@ -1,21 +1,25 @@
-"use strict";
+import React from "react";
 
-var React = require("react");
-
-var AddNote = React.createClass({
-    propTypes: {
+class AddNote extends React.Component {
+    static propTypes = {
         username: React.PropTypes.string.isRequired,
         addNote: React.PropTypes.func.isRequired
-    },
-    handleSubmit: function(e) {
+    };
+
+    constructor(props) {
+        super(props);
+    }
+
+    handleSubmit = (e) => {
         e.preventDefault();
 
-        var note = this.refs.note.value;
+        let note = this.refs.note.value;
 
         this.refs.note.value = "";
         this.props.addNote(note);
-    },
-    render: function() {
+    };
+
+    render() {
         return (
             <form>
                 <div className="form-group">
@@ -32,6 +36,6 @@ var AddNote = React.createClass({
             </form>
         );
     }
-});
+}
 
-module.exports = AddNote;
+export default AddNote;

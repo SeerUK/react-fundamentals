@@ -1,22 +1,21 @@
-"use strict";
+import axios from "axios";
 
-var axios = require("axios");
 var config = {
     headers: { "Authorization": "" }
 };
 
 function getRepos(username) {
-    return axios.get("https://api.github.com/users/" + username + "/repos", config);
+    return axios.get(`https://api.github.com/users/${username}/repos`, config);
 }
 
 function getUserInfo(username) {
-    return axios.get("https://api.github.com/users/" + username, config);
+    return axios.get(`https://api.github.com/users/${username}`, config);
 }
 
-var helpers = {
-    getGithubInfo: function(username) {
+var Helpers = {
+    getGithubInfo(username) {
         return axios.all([ getRepos(username), getUserInfo(username) ])
-            .then(axios.spread(function(repos, bio) {
+            .then(axios.spread((repos, bio) => {
                 return {
                     repos: repos.data,
                     bio: bio.data
@@ -25,4 +24,4 @@ var helpers = {
     }
 };
 
-module.exports = helpers;
+export default Helpers;

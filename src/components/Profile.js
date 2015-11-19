@@ -1,69 +1,96 @@
-"use strict";
+import React from "react";
+import Firebase from "firebase";
+import Repos from "./Github/Repos";
+import UserProfile from "./Github/UserProfile";
+import Notes from "./Notes/Notes";
+import helpers from "./utils/helpers";
 
-var React = require("react");
-var ReactFireMixin = require("reactfire");
-var Firebase = require("firebase");
+class Profile extends React.Component {
+    constructor(props) {
+        super(props);
 
-var Repos = require("./Github/Repos");
-var UserProfile = require("./Github/UserProfile");
-var Notes = require("./Notes/Notes");
-
-var helpers = require("./utils/helpers");
-
-var Profile = React.createClass({
-    mixins: [ ReactFireMixin ],
-    getInitialState: function() {
-        return {
+        this.state = {
             bio: {},
             notes: [],
             repos: []
-        }
-    },
-    init: function() {
-        var that = this;
-        var username = this.props.params.username;
+        };
+    }
 
+    init() {
+        var username = this.props.params.username;
+        var notes = [];
+
+        this.baseRef = new Firebase("https://sweltering-inferno-8790.firebaseio.com");
         this.childRef = this.baseRef.child(username);
 
-        this.bindAsArray(this.childRef, "notes");
+        this.childRef.on("child_added", (child) => {
+            notes.push({
+                key: child.key(),
+                value: child.val()
+            });
+
+            this.setState({
+                notes: notes
+            });
+        });
+
+        this.childRef.on("child_removed", (child) => {
+            var notes = this.state.notes;
+            var index = notes.findIndex(function(note) {
+                if (note.key === child.key()) {
+                    return true;
+                }
+            });
+
+            notes.splice(index, 1);
+
+            this.setState({
+                notes: notes
+            });
+        });
 
         helpers.getGithubInfo(username)
-            .then(function(data) {
-                that.setState({
+            .then((data) => {
+                this.setState({
                     bio: data.bio,
                     repos: data.repos
                 })
             });
-    },
-    componentDidMount: function() {
-        this.baseRef = new Firebase("https://sweltering-inferno-8790.firebaseio.com");
+    }
+
+    componentDidMount() {
         this.init();
-    },
-    componentDidUpdate: function(oldProps) {
+    }
+
+    componentDidUpdate(oldProps) {
         var oldUsername = oldProps.params.username;
         var newUsername = this.props.params.username;
 
         if (oldUsername !== newUsername) {
-            this.childRef.off();
-            this.unbind("notes");
             this.init();
         }
-    },
-    componentWillUnmount: function() {
+    }
+
+    componentWillUnmount() {
         this.baseRef.off();
         this.childRef.off();
-    },
-    handleAddNote: function(note) {
+    }
+
+    handleAddNote = (note) => {
         this.childRef.push(note);
-    },
-    handleDeleteNote: function(note) {
-        var noteRef = this.childRef.child(note[".key"]);
+    };
+
+    handleDeleteNote = (note) => {
+        var noteRef = this.childRef.child(note.key);
 
         noteRef.remove();
         noteRef.off();
-    },
-    render: function() {
+    };
+
+    render() {
         var username = this.props.params.username;
+
+        console.log(this.state.notes);
 
         return (
             <div className="row">
@@ -86,6 +113,6 @@ var Profile = React.createClass({
             </div>
         );
     }
-});
+}
 
-module.exports = Profile;
+export default Profile;

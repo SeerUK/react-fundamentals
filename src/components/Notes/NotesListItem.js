@@ -1,25 +1,29 @@
-"use strict";
+import React from "react";
 
-var React = require("react");
-
-var NotesListItem = React.createClass({
-    propTypes: {
+class NotesListItem extends React.Component {
+    static propTypes: {
         note: React.PropTypes.object.isRequired,
         deleteNote: React.PropTypes.func.isRequired
-    },
-    handleDelete: function() {
+    };
+
+    constructor(props) {
+        super(props);
+    }
+
+    handleDelete = () => {
         this.props.deleteNote(this.props.note);
-    },
-    render: function() {
+    };
+
+    render() {
         return (
             <li className="list-group-item">
-                <span>{this.props.note[".value"]}</span>
+                <span>{this.props.note.value}</span>
                 <button className="btn btn-danger btn-xs pull-right" onClick={this.handleDelete}>
                     &#x2717;
                 </button>
             </li>
         );
     }
-});
+}
 
-module.exports = NotesListItem;
+export default NotesListItem;

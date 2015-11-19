@@ -1,25 +1,21 @@
-"use strict";
+import React from "react";
+import NotesListItem from "./NotesListItem";
 
-var React = require("react");
-
-var NotesListItem = require("./NotesListItem");
-
-var NotesList = React.createClass({
-    propTypes: {
+class NotesList extends React.Component {
+    static propTypes = {
         notes: React.PropTypes.array.isRequired,
         deleteNote: React.PropTypes.func.isRequired
-    },
-    render: function() {
-        var that = this;
+    };
 
+    render() {
         return (
             <ul className="list-group">
-                { this.props.notes.map(function(note, index) {
-                    return <NotesListItem key={index} deleteNote={that.props.deleteNote} note={note} />;
+                { this.props.notes.map((note, index) => {
+                    return <NotesListItem key={index} deleteNote={this.props.deleteNote} note={note} />;
                 }) }
             </ul>
         );
     }
-});
+}
 
-module.exports = NotesList;
+export default NotesList;

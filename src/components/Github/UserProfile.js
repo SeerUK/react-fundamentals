@@ -1,13 +1,12 @@
-"use strict";
+import React from "react";
 
-var React = require("react");
-
-var UserProfile = React.createClass({
-    propTypes: {
+class UserProfile extends React.Component {
+    static propTypes: {
         username: React.PropTypes.string.isRequired,
         bio: React.PropTypes.object.isRequired
-    },
-    render: function() {
+    };
+
+    render() {
         return (
             <div>
                 <h3>User Profile</h3>
@@ -26,6 +25,6 @@ var UserProfile = React.createClass({
             </div>
         );
     }
-});
+}
 
-module.exports = UserProfile;
+export default UserProfile;

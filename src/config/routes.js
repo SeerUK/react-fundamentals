@@ -1,24 +1,12 @@
-"use strict";
-
-var React = require("react");
-var Router = require("react-router").Router;
-var Route = require("react-router").Route;
-var IndexRoute = require("react-router").IndexRoute;
-var createHistory = require("history").createHistory;
-var useBaseName = require("history").useBasename;
-
-// Components
-var Main = require("../components/Main");
-var Home = require("../components/Home");
-var Profile = require("../components/Profile");
-
-// Set up base URL
-const history = useBaseName(createHistory)({
-    basename: "/"
-});
+import React from "react";
+import { Router, Route, IndexRoute } from "react-router";
+import Main from "../components/Main";
+import Home from "../components/Home";
+import Profile from "../components/Profile";
+import history from "../components/utils/history";
 
 // Routing Configuration
-module.exports = (
+export default (
     <Router history={history}>
         <Route path="/" component={Main}>
             <IndexRoute component={Home} />

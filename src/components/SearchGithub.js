@@ -1,11 +1,12 @@
-"use strict";
+import React from "react";
+import history from "./utils/history";
 
-var React = require("react");
-var History = require("react-router").History;
+class SearchGithub extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-var SearchGithub = React.createClass({
-    mixins: [ History ],
-    handleSubmit: function(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
 
         var username = this.refs.username.value;
@@ -15,9 +16,11 @@ var SearchGithub = React.createClass({
         }
 
         this.refs.username.value = "";
-        this.history.pushState(null, "profile/" + username);
-    },
-    render: function() {
+
+        history.pushState(null, "profile/" + username);
+    };
+
+    render() {
         return (
             <form className="navbar-form navbar-right" role="search" onSubmit={this.handleSubmit}>
                 <div className="form-group">
@@ -30,6 +33,6 @@ var SearchGithub = React.createClass({
             </form>
         );
     }
-});
+}
 
-module.exports = SearchGithub;
+export default SearchGithub;
