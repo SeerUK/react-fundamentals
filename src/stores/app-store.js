@@ -11,8 +11,14 @@
  * file that was distributed with this source code.
  */
 
-import { createHistory, useBasename } from "history";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import dispatchLogMiddleware from "../middleware/dispatch-log-middleware";
+import thunkMiddleware from "../middleware/thunk-middleware";
+import * as reducers from "../reducers/reducers";
 
-export default useBasename(createHistory)({
-    basename: "/"
-});
+const buildStore = applyMiddleware(dispatchLogMiddleware, thunkMiddleware)(createStore);
+const AppStore = buildStore(combineReducers({
+    notes: reducers.notesReducer
+}));
+
+export default AppStore;

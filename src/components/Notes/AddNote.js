@@ -1,9 +1,28 @@
-import React from "react";
+/**
+ * This file is part of the react-fundamentals package.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+import React from "react";
+import { connect } from "react-redux";
+import * as NotesActions from "../../actions/notes-actions";
+
+/**
+ * Add Note Component
+ *
+ * @author Elliot Wright <elliot@elliotwright.co>
+ */
 class AddNote extends React.Component {
     static propTypes = {
-        username: React.PropTypes.string.isRequired,
-        addNote: React.PropTypes.func.isRequired
+        username: React.PropTypes.string.isRequired
     };
 
     constructor(props) {
@@ -13,10 +32,12 @@ class AddNote extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        let note = this.refs.note.value;
+        let note = this.refs.note.value.trim();
 
-        this.refs.note.value = "";
-        this.props.addNote(note);
+        if (note !== "") {
+            this.refs.note.value = "";
+            this.props.dispatch(NotesActions.addNote({ value: note }));
+        }
     };
 
     render() {
@@ -38,4 +59,4 @@ class AddNote extends React.Component {
     }
 }
 
-export default AddNote;
+export default connect()(AddNote);

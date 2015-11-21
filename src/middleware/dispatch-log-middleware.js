@@ -11,8 +11,20 @@
  * file that was distributed with this source code.
  */
 
-import { createHistory, useBasename } from "history";
+const prefix = [ "%cDispatchLogger", "font-weight: bold", "|" ];
 
-export default useBasename(createHistory)({
-    basename: "/"
-});
+/**
+ * Dispatch Logger Middleware
+ *
+ * @author Elliot Wright <elliot@elliotwright.co>
+ * @returns {Function}
+ */
+export default function() {
+    return (next) => (action) => {
+        if (typeof action !== "function") {
+            console.info(...prefix, `Action with type '${action.type}' dispatched:`, action);
+        }
+
+        return next(action);
+    }
+}

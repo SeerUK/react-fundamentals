@@ -1,9 +1,28 @@
-import React from "react";
+/**
+ * This file is part of the react-fundamentals package.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+import React from "react";
+import { connect } from "react-redux";
+import * as NotesActions from "../../actions/notes-actions";
+
+/**
+ * Notes List Item Component
+ *
+ * @author Elliot Wright <elliot@elliotwright.co>
+ */
 class NotesListItem extends React.Component {
     static propTypes: {
-        note: React.PropTypes.object.isRequired,
-        deleteNote: React.PropTypes.func.isRequired
+        note: React.PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -11,7 +30,7 @@ class NotesListItem extends React.Component {
     }
 
     handleDelete = () => {
-        this.props.deleteNote(this.props.note);
+        this.props.dispatch(NotesActions.removeNote(this.props.note));
     };
 
     render() {
@@ -26,4 +45,4 @@ class NotesListItem extends React.Component {
     }
 }
 
-export default NotesListItem;
+export default connect()(NotesListItem);

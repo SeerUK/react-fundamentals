@@ -1,3 +1,16 @@
+/**
+ * This file is part of the react-fundamentals package.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 import React from "react";
 import Firebase from "firebase";
 import Repos from "./Github/Repos";
@@ -5,6 +18,11 @@ import UserProfile from "./Github/UserProfile";
 import Notes from "./Notes/Notes";
 import helpers from "./utils/helpers";
 
+/**
+ * Profile Component
+ *
+ * @author Elliot Wright <elliot@elliotwright.co>
+ */
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -18,36 +36,36 @@ class Profile extends React.Component {
 
     init() {
         var username = this.props.params.username;
-        var notes = [];
+        //var notes = [];
 
-        this.baseRef = new Firebase("https://sweltering-inferno-8790.firebaseio.com");
-        this.childRef = this.baseRef.child(username);
-
-        this.childRef.on("child_added", (child) => {
-            notes.push({
-                key: child.key(),
-                value: child.val()
-            });
-
-            this.setState({
-                notes: notes
-            });
-        });
-
-        this.childRef.on("child_removed", (child) => {
-            var notes = this.state.notes;
-            var index = notes.findIndex(function(note) {
-                if (note.key === child.key()) {
-                    return true;
-                }
-            });
-
-            notes.splice(index, 1);
-
-            this.setState({
-                notes: notes
-            });
-        });
+        //this.baseRef = new Firebase("https://sweltering-inferno-8790.firebaseio.com");
+        //this.childRef = this.baseRef.child(username);
+        //
+        //this.childRef.on("child_added", (child) => {
+        //    notes.push({
+        //        key: child.key(),
+        //        value: child.val()
+        //    });
+        //
+        //    this.setState({
+        //        notes: notes
+        //    });
+        //});
+        //
+        //this.childRef.on("child_removed", (child) => {
+        //    var notes = this.state.notes;
+        //    var index = notes.findIndex(function(note) {
+        //        if (note.key === child.key()) {
+        //            return true;
+        //        }
+        //    });
+        //
+        //    notes.splice(index, 1);
+        //
+        //    this.setState({
+        //        notes: notes
+        //    });
+        //});
 
         helpers.getGithubInfo(username)
             .then((data) => {
@@ -72,43 +90,36 @@ class Profile extends React.Component {
     }
 
     componentWillUnmount() {
-        this.baseRef.off();
-        this.childRef.off();
+        //this.baseRef.off();
+        //this.childRef.off();
     }
 
     handleAddNote = (note) => {
-        this.childRef.push(note);
+        //this.childRef.push(note);
     };
 
     handleDeleteNote = (note) => {
-        var noteRef = this.childRef.child(note.key);
-
-        noteRef.remove();
-        noteRef.off();
+        //var noteRef = this.childRef.child(note.key);
+        //
+        //noteRef.remove();
+        //noteRef.off();
     };
 
     render() {
         var username = this.props.params.username;
 
-        console.log(this.state.notes);
-
         return (
             <div className="row">
                 <div className="col-md-4">
-                    <UserProfile username={username} bio={this.state.bio} />
+                    <UserProfile bio={this.state.bio} />
                 </div>
 
                 <div className="col-md-4">
-                    <Repos username={username} repos={this.state.repos} />
+                    <Repos repos={this.state.repos} />
                 </div>
 
                 <div className="col-md-4">
-                    <Notes
-                        username={username}
-                        notes={this.state.notes}
-                        addNote={this.handleAddNote}
-                        deleteNote={this.handleDeleteNote}
-                    />
+                    <Notes username={username} />
                 </div>
             </div>
         );

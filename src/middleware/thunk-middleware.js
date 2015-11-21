@@ -11,8 +11,16 @@
  * file that was distributed with this source code.
  */
 
-import { createHistory, useBasename } from "history";
-
-export default useBasename(createHistory)({
-    basename: "/"
-});
+/**
+ * Thunk Middleware
+ *
+ * @author Elliot Wright <elliot@elliotwright.co>
+ * @returns {Function}
+ */
+export default function({ dispatch, getState }) {
+    return (next) => (action) => {
+        return typeof action === "function"
+            ? action(dispatch, getState)
+            : next(action);
+    }
+};

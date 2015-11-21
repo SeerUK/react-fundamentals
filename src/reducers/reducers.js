@@ -11,8 +11,4 @@
  * file that was distributed with this source code.
  */
 
-import { createHistory, useBasename } from "history";
-
-export default useBasename(createHistory)({
-    basename: "/"
-});
+export { default as notesReducer } from "./notes-reducer";
