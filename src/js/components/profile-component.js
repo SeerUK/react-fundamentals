@@ -91,7 +91,7 @@ class Profile extends React.Component {
 
 export default connect((state) => {
     return {
-        bio: state.profile.bio,
-        repos: state.profile.repos
+        bio: {}, //state.profile.bio,
+        repos: [] //state.profile.repos
     };
 })(Profile);
