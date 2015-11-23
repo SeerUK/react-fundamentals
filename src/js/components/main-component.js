@@ -18,7 +18,7 @@ import SearchGithub from "./search-github-component";
 /**
  * Main Component
  *
- * @author <elliot@elliotwright.co>
+ * @author Elliot Wright <elliot@elliotwright.co>
  */
 class Main extends React.Component {
     render() {

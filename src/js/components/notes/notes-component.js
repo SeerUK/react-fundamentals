@@ -14,6 +14,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import AddNote from "./add-note-component";
+import ComponentGroup from "../component-group-component";
+import LoadingIndicator from "../loading-indicator-component";
 import NotesList from "./notes-list-component";
 import * as NotesActions from "../../actions/notes-actions";
 
@@ -25,7 +27,7 @@ import * as NotesActions from "../../actions/notes-actions";
 class Notes extends React.Component {
     static propTypes = {
         username: React.PropTypes.string.isRequired,
-        notes: React.PropTypes.array.isRequired
+        state: React.PropTypes.object.isRequired
     };
 
     componentWillUpdate(newProps) {
@@ -48,8 +50,16 @@ class Notes extends React.Component {
             <div>
                 <h3>Notes for {this.props.username}</h3>
 
-                <AddNote username={this.props.username} />
-                <NotesList notes={this.props.notes} />
+                {this.props.state.isSyncing &&
+                    <LoadingIndicator />
+                }
+
+                {!this.props.state.isSyncing && (
+                    <ComponentGroup>
+                        <AddNote username={this.props.username} />
+                        <NotesList notes={this.props.state.notes} />
+                    </ComponentGroup>
+                )}
             </div>
         );
     }
@@ -57,6 +67,6 @@ class Notes extends React.Component {
 
 export default connect((state) => {
     return {
-        notes: state.notes.notes
+        state: state.notes
     };
 })(Notes);

@@ -11,6 +11,7 @@
  * file that was distributed with this source code.
  */
 
+import AppStore from "../stores/app-store";
 import axios from "axios";
 import config from "../config/config";
 
@@ -18,24 +19,33 @@ var reqConfig = {
     headers: { "Authorization": `Basic ${config.github.authorization_token}` }
 };
 
-function getRepos(username) {
-    return axios.get(`https://api.github.com/users/${username}/repos`, reqConfig);
-}
-
-function getUserInfo(username) {
-    return axios.get(`https://api.github.com/users/${username}`, reqConfig);
-}
-
-var Helpers = {
-    getGithubInfo(username) {
-        return axios.all([ getRepos(username), getUserInfo(username) ])
+/**
+ * Github Gateway
+ *
+ * @author Elliot Wright <elliot@elliotwright.co>
+ */
+export default class GithubGateway {
+    fetchByUsername(username) {
+        return axios.all([
+            this.fetchReposByUsername(username),
+            this.fetchBioByUsername(username)
+        ])
             .then(axios.spread((repos, bio) => {
                 return {
                     repos: repos.data,
                     bio: bio.data
                 }
-            }));
+            }))
+            .catch(() => {
+                console.log("User not found.");
+            });
     }
-};
 
-export default Helpers;
+    fetchReposByUsername(username) {
+        return axios.get(`https://api.github.com/users/${username}/repos`, reqConfig);
+    }
+
+    fetchBioByUsername(username) {
+        return axios.get(`https://api.github.com/users/${username}`, reqConfig);
+    }
+}

@@ -32,16 +32,20 @@
     "babel-preset-stage-1": "^6.1.18",
     "babel-preset-stage-2": "^6.1.18",
     "babel-preset-stage-3": "^6.1.18",
+    "css-loader": "^0.23.0",
     "express": "^4.13.3",
     "firebase": "^2.3.2",
     "history": "^1.13.1",
     "immutable": "^3.7.5",
+    "node-sass": "^3.4.2",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0",
     "reactfire": "^0.5.1",
     "redux": "^3.0.4",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.6"
   }
 }

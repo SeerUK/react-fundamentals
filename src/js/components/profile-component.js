@@ -11,12 +11,12 @@
  * file that was distributed with this source code.
  */
 
-import React from "react";
 import Firebase from "firebase";
+import GithubGateway from "../services/github-gateway-service";
+import Notes from "./notes/notes-component";
+import React from "react";
 import Repos from "./github/repos-component";
 import UserProfile from "./github/user-profile-component";
-import Notes from "./notes/notes-component";
-import helpers from "../utils/helpers";
 
 /**
  * Profile Component
@@ -29,45 +29,15 @@ class Profile extends React.Component {
 
         this.state = {
             bio: {},
-            notes: [],
             repos: []
         };
     }
 
     init() {
         var username = this.props.params.username;
-        //var notes = [];
 
-        //this.baseRef = new Firebase("https://sweltering-inferno-8790.firebaseio.com");
-        //this.childRef = this.baseRef.child(username);
-        //
-        //this.childRef.on("child_added", (child) => {
-        //    notes.push({
-        //        key: child.key(),
-        //        value: child.val()
-        //    });
-        //
-        //    this.setState({
-        //        notes: notes
-        //    });
-        //});
-        //
-        //this.childRef.on("child_removed", (child) => {
-        //    var notes = this.state.notes;
-        //    var index = notes.findIndex(function(note) {
-        //        if (note.key === child.key()) {
-        //            return true;
-        //        }
-        //    });
-        //
-        //    notes.splice(index, 1);
-        //
-        //    this.setState({
-        //        notes: notes
-        //    });
-        //});
-
-        helpers.getGithubInfo(username)
+        this.githubGateway = new GithubGateway();
+        this.githubGateway.fetchByUsername(username)
             .then((data) => {
                 this.setState({
                     bio: data.bio,
@@ -88,22 +58,6 @@ class Profile extends React.Component {
             this.init();
         }
     }
-
-    componentWillUnmount() {
-        //this.baseRef.off();
-        //this.childRef.off();
-    }
-
-    handleAddNote = (note) => {
-        //this.childRef.push(note);
-    };
-
-    handleDeleteNote = (note) => {
-        //var noteRef = this.childRef.child(note.key);
-        //
-        //noteRef.remove();
-        //noteRef.off();
-    };
 
     render() {
         var username = this.props.params.username;

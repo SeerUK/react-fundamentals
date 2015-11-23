@@ -84,7 +84,7 @@ function bindEvents(ref) {
 
     ref.on("value", (dataSnapshot) => {
         let values = dataSnapshot.val();
-        let notes = Object.keys(values).map((key) => {
+        let notes = Object.keys(values || {}).map((key) => {
             let value = values[key];
 
             return {

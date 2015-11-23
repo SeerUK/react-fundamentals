@@ -14,18 +14,19 @@
 import React from "react";
 
 /**
- * Home Component
+ * Loading Indicator Component
  *
- * @author <elliot@elliotwright.co>
+ * @author Elliot Wright <elliot@elliotwright.co>
  */
-class Home extends React.Component {
+class LoadingIndicator extends React.Component {
     render() {
         return (
-            <h2 className="text-center">
-                Search by Github Username Above
-            </h2>
+            <div className="spinner">
+                <div className="double-bounce1"></div>
+                <div className="double-bounce2"></div>
+            </div>
         );
     }
 }
 
-export default Home;
+export default LoadingIndicator;

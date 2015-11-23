@@ -11,6 +11,8 @@
  * file that was distributed with this source code.
  */
 
+require("../scss/app.scss");
+
 import React from "react";
 import Router from "react-router";
 import routes from "./config/resources/routes";
