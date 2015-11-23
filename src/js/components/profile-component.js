@@ -17,6 +17,7 @@ import Notes from "./notes/notes-component";
 import React from "react";
 import Repos from "./github/repos-component";
 import UserProfile from "./github/user-profile-component";
+import { connect } from "react-redux";
 
 /**
  * Profile Component
@@ -24,6 +25,10 @@ import UserProfile from "./github/user-profile-component";
  * @author Elliot Wright <elliot@elliotwright.co>
  */
 class Profile extends React.Component {
+    static propTypes = {
+        state: React.PropTypes.object.isRequired
+    };
+
     constructor(props) {
         super(props);
 
@@ -44,6 +49,10 @@ class Profile extends React.Component {
                     repos: data.repos
                 })
             });
+    }
+
+    componentWillMount() {
+        //this.props.dispatch()
     }
 
     componentDidMount() {
@@ -80,4 +89,9 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile;
+export default connect((state) => {
+    return {
+        bio: state.profile.bio,
+        repos: state.profile.repos
+    };
+})(Profile);

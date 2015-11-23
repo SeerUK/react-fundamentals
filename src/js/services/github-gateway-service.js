@@ -35,10 +35,7 @@ export default class GithubGateway {
                     repos: repos.data,
                     bio: bio.data
                 }
-            }))
-            .catch(() => {
-                console.log("User not found.");
-            });
+            }));
     }
 
     fetchReposByUsername(username) {

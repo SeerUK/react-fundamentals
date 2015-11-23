@@ -11,13 +11,13 @@
  * file that was distributed with this source code.
  */
 
-import React from "react";
-import { connect } from "react-redux";
+import * as NotesActions from "../../actions/notes-actions";
 import AddNote from "./add-note-component";
 import ComponentGroup from "../component-group-component";
 import LoadingIndicator from "../loading-indicator-component";
 import NotesList from "./notes-list-component";
-import * as NotesActions from "../../actions/notes-actions";
+import React from "react";
+import { connect } from "react-redux";
 
 /**
  * Notes Component
@@ -26,8 +26,9 @@ import * as NotesActions from "../../actions/notes-actions";
  */
 class Notes extends React.Component {
     static propTypes = {
-        username: React.PropTypes.string.isRequired,
-        state: React.PropTypes.object.isRequired
+        isSyncing: React.PropTypes.bool.isRequired,
+        notes: React.PropTypes.array.isRequired,
+        username: React.PropTypes.string.isRequired
     };
 
     componentWillUpdate(newProps) {
@@ -50,14 +51,14 @@ class Notes extends React.Component {
             <div>
                 <h3>Notes for {this.props.username}</h3>
 
-                {this.props.state.isSyncing &&
+                {this.props.isSyncing &&
                     <LoadingIndicator />
                 }
 
-                {!this.props.state.isSyncing && (
+                {!this.props.isSyncing && (
                     <ComponentGroup>
                         <AddNote username={this.props.username} />
-                        <NotesList notes={this.props.state.notes} />
+                        <NotesList notes={this.props.notes} />
                     </ComponentGroup>
                 )}
             </div>
@@ -67,6 +68,7 @@ class Notes extends React.Component {
 
 export default connect((state) => {
     return {
-        state: state.notes
+        isSyncing: state.notes.isSyncing,
+        notes: state.notes.notes
     };
 })(Notes);
