@@ -13,10 +13,10 @@
 
 import React from "react";
 import Firebase from "firebase";
-import Repos from "./Github/Repos";
-import UserProfile from "./Github/UserProfile";
-import Notes from "./Notes/Notes";
-import helpers from "./utils/helpers";
+import Repos from "./github/repos-component";
+import UserProfile from "./github/user-profile-component";
+import Notes from "./notes/notes-component";
+import helpers from "../utils/helpers";
 
 /**
  * Profile Component

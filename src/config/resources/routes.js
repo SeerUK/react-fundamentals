@@ -12,15 +12,17 @@
  */
 
 import React from "react";
-import Router from "react-router";
-import routes from "./config/resources/routes";
-import { render } from "react-dom";
-import { Provider } from "react-redux";
-import AppStore from "./stores/app-store";
+import { Router, Route, IndexRoute } from "react-router";
+import Main from "../../components/main-component";
+import Home from "../../components/home-component";
+import Profile from "../../components/profile-component";
+import history from "../../utils/history";
 
-render((
-    <Provider store={AppStore} key="provider">
-        {routes}
-    </Provider>
-), document.getElementById("app"));
-
+export default (
+    <Router history={history}>
+        <Route path="/" component={Main}>
+            <IndexRoute component={Home} />
+            <Route path="profile/:username" component={Profile} />
+        </Route>
+    </Router>
+);

@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-const prefix = [ "%cDispatchLogger", "font-weight: bold", "|" ];
+const prefix = [ "%cDispatchLogger", "color: #CE9B1A; font-weight: bold", "::" ];
 
 /**
  * Dispatch Logger Middleware
@@ -19,12 +19,12 @@ const prefix = [ "%cDispatchLogger", "font-weight: bold", "|" ];
  * @author Elliot Wright <elliot@elliotwright.co>
  * @returns {Function}
  */
-export default function() {
+export default function({ getState }) {
     return (next) => (action) => {
-        if (typeof action !== "function") {
-            console.info(...prefix, `Action with type '${action.type}' dispatched:`, action);
-        }
+        next(action);
 
-        return next(action);
+        if (typeof action !== "function") {
+            console.info(...prefix, `Action with type '${action.type}' dispatched:`, action, "New state:", getState());
+        }
     }
 }

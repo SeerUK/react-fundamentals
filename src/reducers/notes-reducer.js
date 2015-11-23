@@ -14,6 +14,7 @@
 import * as Constants from "../app-constants";
 
 const defaultState = {
+    isSyncing: false,
     notes: [],
     notesGateway: null
 };
@@ -39,23 +40,17 @@ export default function notesReducer(state = defaultState, action) {
                 notesGateway: null
             };
 
-        case Constants.NOTES_EVENT_NOTE_ADDED:
+        case Constants.NOTES_EVENT_SYNCING:
             return {
                 ...state,
-                notes: [
-                    ...state.notes,
-                    action.note
-                ]
+                isSyncing: true
             };
 
-        case Constants.NOTES_EVENT_NOTE_REMOVED:
+        case Constants.NOTES_EVENT_SYNCED:
             return {
                 ...state,
-                notes: [
-                    ...state.notes.filter((note) => {
-                        return note.key !== action.note.key;
-                    })
-                ]
+                isSyncing: false,
+                notes: action.notes
             };
 
         case Constants.NOTES_PROCESS_NOTE_ADDING:

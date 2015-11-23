@@ -13,8 +13,8 @@
 
 import React from "react";
 import { connect } from "react-redux";
-import AddNote from "./AddNote";
-import NotesList from "./NotesList";
+import AddNote from "./add-note-component";
+import NotesList from "./notes-list-component";
 import * as NotesActions from "../../actions/notes-actions";
 
 /**

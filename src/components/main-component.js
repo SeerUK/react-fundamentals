@@ -13,7 +13,7 @@
 
 import React from "react";
 import { IndexLink } from "react-router";
-import SearchGithub from "./SearchGithub";
+import SearchGithub from "./search-github-component";
 
 /**
  * Main Component

@@ -78,31 +78,21 @@ export default class NotesGateway {
 }
 
 function bindEvents(ref) {
+    // For initial load, update state to show loading, after this we'll simply be reacting to
+    // any changes in Firebase as soon as they occur, and will still have data displayed.
+    AppStore.dispatch(NotesActions.syncingNotes());
+
     ref.on("value", (dataSnapshot) => {
         let values = dataSnapshot.val();
-
-        console.debug(values);
-        console.debug(Object.keys(values).map((key) => {
+        let notes = Object.keys(values).map((key) => {
             let value = values[key];
 
             return {
                 key: key,
                 value: value
             };
-        }));
-    });
+        });
 
-    ref.on("child_added", (child) => {
-        AppStore.dispatch(NotesActions.noteAdded({
-            key: child.key(),
-            value: child.val()
-        }));
-    });
-
-    ref.on("child_removed", (child) => {
-        AppStore.dispatch(NotesActions.noteRemoved({
-            key: child.key(),
-            value: child.val()
-        }));
+        AppStore.dispatch(NotesActions.syncNotes(notes));
     });
 }

@@ -12,7 +12,7 @@
  */
 
 import React from "react";
-import NotesListItem from "./NotesListItem";
+import NotesListItem from "./notes-list-item-component";
 
 /**
  * Notes List Component

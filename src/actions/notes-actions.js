@@ -33,17 +33,16 @@ export function uninitialiseNotes() {
     };
 }
 
-export function noteAdded(note) {
+export function syncingNotes() {
     return {
-        type: Constants.NOTES_EVENT_NOTE_ADDED,
-        note
+        type: Constants.NOTES_EVENT_SYNCING
     };
 }
 
-export function noteRemoved(note) {
+export function syncNotes(notes) {
     return {
-        type: Constants.NOTES_EVENT_NOTE_REMOVED,
-        note
+        type: Constants.NOTES_EVENT_SYNCED,
+        notes
     };
 }
 

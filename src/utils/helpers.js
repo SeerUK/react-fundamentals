@@ -10,18 +10,20 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-import axios from "axios";
 
-var config = {
-    headers: { "Authorization": "" }
+import axios from "axios";
+import config from "../config/config";
+
+var reqConfig = {
+    headers: { "Authorization": `Basic ${config.github.authorization_token}` }
 };
 
 function getRepos(username) {
-    return axios.get(`https://api.github.com/users/${username}/repos`, config);
+    return axios.get(`https://api.github.com/users/${username}/repos`, reqConfig);
 }
 
 function getUserInfo(username) {
-    return axios.get(`https://api.github.com/users/${username}`, config);
+    return axios.get(`https://api.github.com/users/${username}`, reqConfig);
 }
 
 var Helpers = {
