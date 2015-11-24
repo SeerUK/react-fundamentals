@@ -14,49 +14,40 @@
 import * as Constants from "../app-constants";
 
 const defaultState = {
-    isSyncing: true,
-    notes: [],
-    notesGateway: null
+    isLoading: true,
+    bio: {},
+    repos: []
 };
 
 /**
- * Notes Reducer
+ * Profile Reducer
  *
  * @param {object} state
  * @param {object} action
  * @returns {object}
  */
-export default function notesReducer(state = defaultState, action) {
+export default function profileReducer(state = defaultState, action) {
     switch (action.type) {
-        case Constants.NOTES_INITIALISE:
+        case Constants.PROFILE_EVENT_LOADING:
             return {
                 ...state,
-                notesGateway: action.notesGateway
+                isLoading: true
             };
 
-        case Constants.NOTES_UNINITIALISE:
+        case Constants.PROFILE_EVENT_LOADED:
+            return {
+                ...state,
+                isLoading: false,
+                bio: action.profile.bio,
+                repos: action.profile.repos
+            };
+
+        case Constants.PROFILE_EVENT_UNLOAD:
             return {
                 ...defaultState
             };
 
-        case Constants.NOTES_EVENT_SYNCING:
-            return {
-                ...state,
-                isSyncing: true
-            };
-
-        case Constants.NOTES_EVENT_SYNCED:
-            return {
-                ...state,
-                isSyncing: false,
-                notes: action.notes
-            };
-
-        case Constants.NOTES_PROCESS_NOTE_ADDING:
-        case Constants.NOTES_PROCESS_NOTE_ADDED:
-        case Constants.NOTES_PROCESS_NOTE_REMOVING:
-        case Constants.NOTES_PROCESS_NOTE_REMOVED:
         default:
             return state;
     }
-};
+}

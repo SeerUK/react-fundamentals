@@ -28,6 +28,8 @@ export default class NotesGateway {
      * @returns void
      */
     constructor(username) {
+        username = username.toLowerCase();
+
         this.ref = new Firebase(`https://sweltering-inferno-8790.firebaseio.com/${username}`);
 
         bindEvents(this.ref);

@@ -11,9 +11,10 @@
  * file that was distributed with this source code.
  */
 
-import React from "react";
-import { connect } from "react-redux";
 import history from "../utils/history";
+import React from "react";
+import * as SearchGithubActions from "../actions/search-github-actions";
+import { connect } from "react-redux";
 
 /**
  * Search Github Component
@@ -30,13 +31,12 @@ class SearchGithub extends React.Component {
 
         var username = this.refs.username.value;
 
-        if (!username.length) {
+        if (!username.trim().length) {
             return;
         }
 
+        this.props.dispatch(SearchGithubActions.searchByUsername(username));
         this.refs.username.value = "";
-
-        history.pushState(null, "profile/" + username);
     };
 
     render() {

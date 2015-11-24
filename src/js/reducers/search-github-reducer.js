@@ -11,6 +11,12 @@
  * file that was distributed with this source code.
  */
 
-export { default as notesReducer } from "./notes-reducer";
-export { default as profileReducer } from "./profile-reducer";
-export { default as searchGithubReducer } from "./search-github-reducer";
+/**
+ * Search Github Reducer
+ *
+ * @param {object} state
+ * @returns {object}
+ */
+export default function searchGithubReducer(state = {}) {
+    return state;
+}

@@ -25,10 +25,10 @@ var reqConfig = {
  * @author Elliot Wright <elliot@elliotwright.co>
  */
 export default class GithubGateway {
-    fetchByUsername(username) {
+    static fetchByUsername(username) {
         return axios.all([
-            this.fetchReposByUsername(username),
-            this.fetchBioByUsername(username)
+            GithubGateway.fetchReposByUsername(username),
+            GithubGateway.fetchBioByUsername(username)
         ])
             .then(axios.spread((repos, bio) => {
                 return {
@@ -38,11 +38,11 @@ export default class GithubGateway {
             }));
     }
 
-    fetchReposByUsername(username) {
+    static fetchReposByUsername(username) {
         return axios.get(`https://api.github.com/users/${username}/repos`, reqConfig);
     }
 
-    fetchBioByUsername(username) {
+    static fetchBioByUsername(username) {
         return axios.get(`https://api.github.com/users/${username}`, reqConfig);
     }
 }

@@ -18,7 +18,9 @@ import * as reducers from "../reducers/reducers";
 
 const buildStore = applyMiddleware(dispatchLogMiddleware, thunkMiddleware)(createStore);
 const AppStore = buildStore(combineReducers({
-    notes: reducers.notesReducer
+    notes: reducers.notesReducer,
+    profile: reducers.profileReducer,
+    searchGithub: reducers.searchGithubReducer
 }));
 
 export default AppStore;

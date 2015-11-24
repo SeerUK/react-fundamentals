@@ -11,8 +11,11 @@
  * file that was distributed with this source code.
  */
 
+import * as ProfileActions from "../actions/profile-actions";
+import ComponentGroup from "./component-group-component";
 import Firebase from "firebase";
 import GithubGateway from "../services/github-gateway-service";
+import LoadingIndicator from "./loading-indicator-component";
 import Notes from "./notes/notes-component";
 import React from "react";
 import Repos from "./github/repos-component";
@@ -26,37 +29,17 @@ import { connect } from "react-redux";
  */
 class Profile extends React.Component {
     static propTypes = {
-        state: React.PropTypes.object.isRequired
+        bio: React.PropTypes.object.isRequired,
+        isLoading: React.PropTypes.bool.isRequired,
+        repos: React.PropTypes.array.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            bio: {},
-            repos: []
-        };
-    }
-
-    init() {
-        var username = this.props.params.username;
-
-        this.githubGateway = new GithubGateway();
-        this.githubGateway.fetchByUsername(username)
-            .then((data) => {
-                this.setState({
-                    bio: data.bio,
-                    repos: data.repos
-                })
-            });
-    }
-
     componentWillMount() {
-        //this.props.dispatch()
+        this.props.dispatch(ProfileActions.loadProfile(this.props.params.username));
     }
 
-    componentDidMount() {
-        this.init();
+    componentWillUnmount() {
+        this.props.dispatch(ProfileActions.unloadProfile());
     }
 
     componentDidUpdate(oldProps) {
@@ -64,7 +47,8 @@ class Profile extends React.Component {
         var newUsername = this.props.params.username;
 
         if (oldUsername !== newUsername) {
-            this.init();
+            this.props.dispatch(ProfileActions.unloadProfile());
+            this.props.dispatch(ProfileActions.loadProfile(newUsername));
         }
     }
 
@@ -73,17 +57,27 @@ class Profile extends React.Component {
 
         return (
             <div className="row">
-                <div className="col-md-4">
-                    <UserProfile bio={this.state.bio} />
-                </div>
+                {this.props.isLoading &&
+                    <div className="col-md-12">
+                        <LoadingIndicator />
+                    </div>
+                }
 
-                <div className="col-md-4">
-                    <Repos repos={this.state.repos} />
-                </div>
+                {!this.props.isLoading &&
+                    <ComponentGroup>
+                        <div className="col-md-4">
+                            <UserProfile bio={this.props.bio} />
+                        </div>
 
-                <div className="col-md-4">
-                    <Notes username={username} />
-                </div>
+                        <div className="col-md-4">
+                            <Repos repos={this.props.repos} />
+                        </div>
+
+                        <div className="col-md-4">
+                            <Notes username={username} />
+                        </div>
+                    </ComponentGroup>
+                }
             </div>
         );
     }
@@ -91,7 +85,8 @@ class Profile extends React.Component {
 
 export default connect((state) => {
     return {
-        bio: {}, //state.profile.bio,
-        repos: [] //state.profile.repos
+        bio: state.profile.bio,
+        isLoading: state.profile.isLoading,
+        repos: state.profile.repos
     };
 })(Profile);

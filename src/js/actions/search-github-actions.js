@@ -11,6 +11,14 @@
  * file that was distributed with this source code.
  */
 
-export { default as notesReducer } from "./notes-reducer";
-export { default as profileReducer } from "./profile-reducer";
-export { default as searchGithubReducer } from "./search-github-reducer";
+import * as Constants from "../app-constants";
+import history from "../utils/history";
+
+export function searchByUsername(username) {
+    history.pushState(null, `profile/${username}`);
+
+    return {
+        type: Constants.SEARCH_GITHUB_EVENT_SEARCH,
+        username
+    };
+}
