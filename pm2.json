@@ -1,0 +1,9 @@
+{
+    "apps": [{
+        "name": "react-fundamentals-server",
+        "script": "./bin/server",
+        "watch": true,
+        "exec_interpreter": "babel-node",
+        "exec_mode": "fork"
+    }]
+}
