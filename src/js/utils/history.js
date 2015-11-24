@@ -11,8 +11,10 @@
  * file that was distributed with this source code.
  */
 
-import { createHistory, useBasename } from "history";
+import { createHistory, createMemoryHistory, useBasename } from "history";
 
-export default useBasename(createHistory)({
+const creator = typeof window !== "undefined" ? createHistory : createMemoryHistory;
+
+export default useBasename(creator)({
     basename: "/"
 });

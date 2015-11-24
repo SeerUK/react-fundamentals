@@ -13,9 +13,16 @@
  * file that was distributed with this source code.
  */
 
-const chalk = require("chalk");
-const express = require("express");
-const path = require("path");
+import AppStoreFactory from "../src/js/stores/app-store-factory";
+import chalk from "chalk";
+import express from "express";
+import path from "path";
+import React from "react";
+import routes from "../src/js/config/resources/routes";
+import { match, RoutingContext } from "react-router"
+import { Provider } from "react-redux"
+import { renderToString } from "react-dom/server"
+
 const port = process.env.RF_DEV_PORT || 8080;
 const app = express();
 
@@ -23,10 +30,47 @@ const app = express();
 app.use(express.static(__dirname + "/../web"));
 
 // handle every other route with index.html
-app.get("*", function (request, response) {
-    response.sendFile(path.resolve(__dirname, "..", "web", "index.html"));
+app.get("*", function (req, res) {
+    const store = AppStoreFactory.build();
+
+    match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
+        if (error) {
+            res.status(500).send(error.message);
+        } else if (redirectLocation) {
+            res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+        } else if (renderProps) {
+            res.status(200).send(renderFullPage(renderToString(
+                <Provider store={store}>
+                    <RoutingContext {...renderProps} />
+                </Provider>
+            ), {}));
+        } else {
+            res.status(404).send('Not found');
+        }
+    });
 });
 
 app.listen(port);
 
 console.log("Development server started on port " + chalk.magenta(port));
+
+function renderFullPage(html, initialState) {
+    return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>React Fundamentals</title>
+
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div id="app">${html}</div>
+
+        <script>
+            window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+        </script>
+        <script src="/js/bundle.js"></script>
+    </body>
+    </html>`;
+}

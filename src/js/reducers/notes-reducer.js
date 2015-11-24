@@ -57,6 +57,9 @@ export default function notesReducer(state = defaultState, action) {
         case Constants.NOTES_PROCESS_NOTE_REMOVING:
         case Constants.NOTES_PROCESS_NOTE_REMOVED:
         default:
-            return state;
+            return {
+                ...defaultState,
+                ...state
+            };
     }
 };

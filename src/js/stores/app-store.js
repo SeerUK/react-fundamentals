@@ -11,16 +11,6 @@
  * file that was distributed with this source code.
  */
 
-import { applyMiddleware, combineReducers, createStore } from "redux";
-import dispatchLogMiddleware from "../middleware/dispatch-log-middleware";
-import thunkMiddleware from "../middleware/thunk-middleware";
-import * as reducers from "../reducers/reducers";
+import AppStoreFactory from "./app-store-factory";
 
-const buildStore = applyMiddleware(dispatchLogMiddleware, thunkMiddleware)(createStore);
-const AppStore = buildStore(combineReducers({
-    notes: reducers.notesReducer,
-    profile: reducers.profileReducer,
-    searchGithub: reducers.searchGithubReducer
-}));
-
-export default AppStore;
+export default AppStoreFactory.build();

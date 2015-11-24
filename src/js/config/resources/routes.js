@@ -16,13 +16,10 @@ import { Router, Route, IndexRoute } from "react-router";
 import Main from "../../components/main-component";
 import Home from "../../components/home-component";
 import Profile from "../../components/profile-component";
-import history from "../../utils/history";
 
 export default (
-    <Router history={history}>
-        <Route path="/" component={Main}>
-            <IndexRoute component={Home} />
-            <Route path="profile/:username" component={Profile} />
-        </Route>
-    </Router>
+    <Route path="/" component={Main}>
+        <IndexRoute component={Home} />
+        <Route path="profile/:username" component={Profile} />
+    </Route>
 );

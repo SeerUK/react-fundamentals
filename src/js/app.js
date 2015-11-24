@@ -13,16 +13,19 @@
 
 require("../scss/app.scss");
 
+import AppStore from "./stores/app-store";
+import history from "./utils/history";
 import React from "react";
 import Router from "react-router";
 import routes from "./config/resources/routes";
-import { render } from "react-dom";
 import { Provider } from "react-redux";
-import AppStore from "./stores/app-store";
+import { render } from "react-dom";
 
 render((
     <Provider store={AppStore} key="provider">
-        {routes}
+        <Router history={history}>
+            {routes}
+        </Router>
     </Provider>
 ), document.getElementById("app"));
 
