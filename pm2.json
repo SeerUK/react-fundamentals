@@ -4,6 +4,7 @@
         "script": "./bin/server",
         "watch": true,
         "exec_interpreter": "babel-node",
-        "exec_mode": "fork"
+        "exec_mode": "fork",
+        "args": "--presets es2015,react,stage-0,stage-1,stage-2,stage-3"
     }]
 }
